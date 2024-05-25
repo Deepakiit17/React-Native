@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {
   Button,
   FlatList,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -27,21 +28,71 @@ function App() {
       name: 'bruce',
     },
     {
+      id: 5,
+      name: 'bruce',
+    },
+    {
+      id: 4,
+      name: 'bruce',
+    },
+    {
+      id: 4,
+      name: 'bruce',
+    },
+    {
+      id: 4,
+      name: 'bruce',
+    },
+    {
+      id: 4,
+      name: 'bruce',
+    },
+    {
+      id: 4,
+      name: 'bruce',
+    },
+    {
+      id: 4,
+      name: 'bruce',
+    },
+    {
+      id: 4,
+      name: 'bruce',
+    },
+    {
       id: 10,
       name: 'tony',
+    },
+    {
+      id: 4,
+      name: 'bruce',
+    },
+    {
+      id: 4,
+      name: 'bruce',
+    },
+    {
+      id: 4,
+      name: 'bruce',
+    },
+    {
+      id: 4,
+      name: 'bruce',
+    },
+    {
+      id: 4,
+      name: 'bruce',
     },
   ];
 
   return (
     <View>
       <Text style={{fontSize: 40}}>List with Flat List Component in RN</Text>
-      <FlatList
-        data={users}
-        renderItem={({item}) => (
+      <ScrollView style={{marginBottom: 50}}>
+        {users.map(item => (
           <Text style={styles.textInput}>{item.name}</Text>
-        )}
-        keyExtractor={item => item.id}
-      />
+        ))}
+      </ScrollView>
     </View>
   );
 }
