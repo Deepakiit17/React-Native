@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Button,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 function App() {
   const users = [
@@ -87,25 +79,29 @@ function App() {
 
   return (
     <View>
-      <Text style={{fontSize: 40}}>List with Flat List Component in RN</Text>
-      <ScrollView style={{marginBottom: 50}}>
+      <Text style={{fontSize: 40}}>Grid with Dynamic Data in RN</Text>
+      <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
         {users.map(item => (
           <Text style={styles.textInput}>{item.name}</Text>
         ))}
-      </ScrollView>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   textInput: {
-    fontSize: 24,
+    fontSize: 25,
     color: '#fff',
-    padding: 10,
+    padding: 5,
     backgroundColor: 'blue',
     borderWidth: 1,
     borderColor: 'black',
-    margin: 10,
+    margin: 5,
+    width: 120,
+    height: 120,
+    textAlignVertical: 'center',
+    textAlign: 'center',
   },
 });
 
