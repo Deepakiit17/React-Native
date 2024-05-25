@@ -1,19 +1,21 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 import React from 'react';
 import {Button, Text, View} from 'react-native';
-import CompanyData from './Components/CompanyData';
 
 function App() {
+  let data = 100;
+  const fruit = val => {
+    data = 20;
+    console.warn(data);
+  };
   return (
     <View>
-      <Text style={{fontSize: 40}}>React Native with TS</Text>
-      <Button title="Press Here" />
-      <CompanyData />
+      <Text style={{fontSize: 40}}>{data}</Text>
+      <Button
+        title="Press Here"
+        onPress={() => fruit('Hello Anil')}
+        color={'red'}
+      />
+      <Button title="Press Here 2" onPress={fruit} color={'green'} />
     </View>
   );
 }
