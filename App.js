@@ -1,39 +1,21 @@
-import React, {useState} from 'react';
-import {SectionList, Text, View} from 'react-native';
+import React, {Component} from 'react';
+import {Button, Text, TextInput, View} from 'react-native';
+import Student from './Components/CompanyData';
 
-function App() {
-  const users = [
-    {
-      id: 1,
-      name: 'anil',
-      data: ['js', 'html', 'css'],
-    },
-    {
-      id: 2,
-      name: 'sam',
-      data: ['C', 'C++', 'Python'],
-    },
-    {
-      id: 3,
-      name: 'peter',
-      data: ['UI', 'Lang', 'GO'],
-    },
-  ];
-
-  return (
-    <View>
-      <Text style={{fontSize: 40}}>Section List in RN</Text>
-      <SectionList
-        sections={users}
-        renderItem={({item}) => (
-          <Text style={{fontSize: 20, marginLeft: 20}}>{item}</Text>
-        )}
-        renderSectionHeader={({section: {name}}) => (
-          <Text style={{fontSize: 25, color: 'red'}}>{name}</Text>
-        )}
-      />
-    </View>
-  );
+class App extends Component {
+  fruit = () => {
+    console.warn('Apple');
+  };
+  render() {
+    return (
+      <View>
+        <Text style={{fontSize: 40, color: 'red'}}>Class Component in RN</Text>
+        <TextInput placeholder="Enter Your Name" />
+        <Button title="Press Me" onPress={this.fruit} />
+        <Student />
+      </View>
+    );
+  }
 }
 
 export default App;
