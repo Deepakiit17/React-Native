@@ -1,32 +1,36 @@
 import React, {useState} from 'react';
-import {FlatList, Text, View} from 'react-native';
-import UserData from './Components/CompanyData';
+import {SectionList, Text, View} from 'react-native';
 
 function App() {
   const users = [
     {
       id: 1,
       name: 'anil',
-      email: 'anil@text.com',
+      data: ['js', 'html', 'css'],
     },
     {
       id: 2,
       name: 'sam',
-      email: 'sam@text.com',
+      data: ['C', 'C++', 'Python'],
     },
     {
       id: 3,
       name: 'peter',
-      email: 'pet@text.com',
+      data: ['UI', 'Lang', 'GO'],
     },
   ];
 
   return (
     <View>
-      <Text style={{fontSize: 40}}>Grid with Dynamic Data in RN</Text>
-      <FlatList
-        data={users}
-        renderItem={({item}) => <UserData item={item} />}
+      <Text style={{fontSize: 40}}>Section List in RN</Text>
+      <SectionList
+        sections={users}
+        renderItem={({item}) => (
+          <Text style={{fontSize: 20, marginLeft: 20}}>{item}</Text>
+        )}
+        renderSectionHeader={({section: {name}}) => (
+          <Text style={{fontSize: 25, color: 'red'}}>{name}</Text>
+        )}
       />
     </View>
   );
