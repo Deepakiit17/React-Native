@@ -6,17 +6,24 @@ function App() {
 
   return (
     <View>
-      <Text style={{fontSize: 40}}>useEffect as componentDidUpdate in RN</Text>
+      <Text style={{fontSize: 40}}>useEffect for unmount component in RN</Text>
       <Button title="Toggle Component" onPress={() => setShow(!show)} />
       {show ? <User /> : null}
     </View>
   );
 }
 
-const User = props => {
+const User = () => {
+  let timer = setInterval(() => {
+    console.warn('Timer Called');
+  }, 2000);
+
+  useEffect(() => {
+    return () => clearInterval(timer);
+  });
   return (
     <View>
-      <Text style={{fontSize: 30, color: 'orange'}}>User Component</Text>
+      <Text style={{fontSize: 30, color: 'red'}}>Student</Text>
     </View>
   );
 };
