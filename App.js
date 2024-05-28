@@ -1,25 +1,27 @@
 import React, {useState} from 'react';
-import {Button, StatusBar, StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 
 function App() {
-  const [hide, setHide] = useState(false);
-  const [barStyle, setBarStyle] = useState('default');
   return (
     <View style={styles.main}>
-      <StatusBar backgroundColor="blue" barStyle={barStyle} hidden={hide} />
-      <Button title="Toggle Status Bar" onPress={() => setHide(!hide)} />
-      <Button
-        title="Update Style"
-        onPress={() => setBarStyle('dark-content')}
-      />
+      <Text style={{fontSize: 30}}>Platform : {Platform.OS}</Text>
+      {Platform.OS == 'android' ? (
+        <View
+          style={{backgroundColor: 'green', height: 100, width: 100}}></View>
+      ) : (
+        <View
+          style={{backgroundColor: 'green', height: 100, width: 100}}></View>
+      )}
+      <Text style={styles.text}>Hello</Text>
+      <Text style={{fontSize: 20}}>{JSON.stringify(Platform)}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-    justifyContent: 'center',
+  text: {
+    color: Platform.OS == 'android' ? 'orange' : 'blue',
+    fontSize: 20,
   },
 });
 
