@@ -1,10 +1,13 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {Button, Text, View} from 'react-native';
+import {Button, Text, TextInput, View} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 function App() {
+  const btnAction = () => {
+    console.warn('btn pressed');
+  };
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -19,6 +22,9 @@ function App() {
         }}>
         <Stack.Screen
           options={{
+            headerTitle: () => <Button onPress={btnAction} title="Left" />,
+            headerRight: () => <Header />,
+            title: 'User Login',
             headerStyle: {
               backgroundColor: 'green',
             },
@@ -35,6 +41,10 @@ function App() {
     </NavigationContainer>
   );
 }
+
+const Header = () => {
+  return <TextInput placeholder="name" />;
+};
 
 const Home = () => {
   return (
