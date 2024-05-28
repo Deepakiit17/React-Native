@@ -1,42 +1,38 @@
-import React, {useState} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
+import {Button, Text, View} from 'react-native';
 
+const Stack = createNativeStackNavigator();
 function App() {
-  const [show, setShow] = useState(false);
   return (
-    <View style={styles.container}>
-      {show ? (
-        <View style={styles.modal}>
-          <View style={styles.body}>
-            <Text>Some Text</Text>
-            <Button title="Close" onPress={() => setShow(false)} />
-          </View>
-        </View>
-      ) : null}
-      <Button title="Open Dialog" onPress={() => setShow(true)} />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Home" component={Home} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  modal: {
-    flex: 1,
-    backgroundColor: 'rgba(50,50,50,.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  body: {
-    backgroundColor: '#fff',
-    height: 300,
-    width: 300,
-    padding: 20,
-    justifyContent: 'flex-end',
-    borderRadius: 10,
-  },
-});
+const Home = () => {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text style={{fontSize: 30}}>Home Screen</Text>
+    </View>
+  );
+};
+
+const Login = props => {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text style={{fontSize: 30}}>Lock Screen</Text>
+      <Button
+        title="Go to Home Page"
+        onPress={() => props.navigation.navigate('Home')}
+      />
+    </View>
+  );
+};
 
 export default App;
