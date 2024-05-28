@@ -1,20 +1,21 @@
 import React, {useState} from 'react';
-import {ActivityIndicator, Button, StyleSheet, Text, View} from 'react-native';
+import {Button, Modal, StyleSheet, Text, View} from 'react-native';
 
 function App() {
-  const [show, setShow] = useState(false);
-  const displayLoader = () => {
-    setShow(true);
-
-    setTimeout(() => {
-      setShow(false);
-    }, 5000);
-  };
+  const [showModal, setShowModal] = useState(false);
   return (
     <View style={styles.main}>
-      <ActivityIndicator size={100} color="green" animating={show} />
-      {show ? <ActivityIndicator size="large" color="red" /> : null}
-      <Button title="show loader" onPress={displayLoader} />
+      <Modal transparent={true} visible={showModal} animationType="slide">
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Hello Code Step by Step</Text>
+            <Button title="Close Modal" onPress={() => setShowModal(false)} />
+          </View>
+        </View>
+      </Modal>
+      <View style={styles.buttonView}>
+        <Button title="Open Modal" onPress={() => setShowModal(true)} />
+      </View>
     </View>
   );
 }
@@ -22,8 +23,26 @@ function App() {
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    alignItems: 'center',
+  },
+  buttonView: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  centeredView: {
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView: {
+    backgroundColor: '#fff',
+    padding: 30,
+    borderRadius: 20,
+    shadowColor: 'black',
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 30,
+    marginBottom: 20,
   },
 });
 
