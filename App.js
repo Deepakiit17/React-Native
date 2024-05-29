@@ -2,6 +2,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {Button, Text, TextInput, View} from 'react-native';
+import {Home} from './Components/Home';
+import {Login} from './Components/Login';
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -44,26 +46,6 @@ function App() {
 
 const Header = () => {
   return <TextInput placeholder="name" />;
-};
-
-const Home = () => {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text style={{fontSize: 30}}>Home Screen</Text>
-    </View>
-  );
-};
-
-const Login = props => {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text style={{fontSize: 30}}>Lock Screen</Text>
-      <Button
-        title="Go to Home Screen"
-        onPress={() => props.navigation.navigate('Home')}
-      />
-    </View>
-  );
 };
 
 export default App;
