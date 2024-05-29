@@ -1,51 +1,34 @@
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {Button, Text, TextInput, View} from 'react-native';
-import {Home} from './Components/Home';
-import {Login} from './Components/Login';
+import {Text, View} from 'react-native';
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 function App() {
-  const btnAction = () => {
-    console.warn('btn pressed');
-  };
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: 'blue',
-          },
-          headerTintColor: 'orange',
-          headerTitleStyle: {
-            fontSize: 25,
-          },
-        }}>
-        <Stack.Screen
-          options={{
-            headerTitle: () => <Button onPress={btnAction} title="Left" />,
-            headerRight: () => <Header />,
-            title: 'User Login',
-            headerStyle: {
-              backgroundColor: 'green',
-            },
-            headerTintColor: 'white',
-            headerTitleStyle: {
-              fontSize: 25,
-            },
-          }}
-          name="Login"
-          component={Login}
-        />
-        <Stack.Screen name="Home" component={Home} />
-      </Stack.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="Login" component={Login} />
+        <Tab.Screen name="SignUp" component={SignUp} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
 
-const Header = () => {
-  return <TextInput placeholder="name" />;
+const Login = () => {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text style={{fontsize: 40}}>Login</Text>
+    </View>
+  );
+};
+
+const SignUp = () => {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text style={{fontsize: 40}}>SignUp</Text>
+    </View>
+  );
 };
 
 export default App;
