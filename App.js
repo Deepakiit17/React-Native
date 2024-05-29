@@ -1,35 +1,32 @@
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
 
-const Tab = createMaterialTopTabNavigator();
 function App() {
+  const [data, setData] = useState(undefined);
+  const getAPIData = async () => {
+    //api call
+    const url = 'https://jsonplaceholder.typicode.com/posts/1';
+    let result = await fetch(url);
+    result = await result.json();
+    setData(result);
+  };
+
+  useEffect(() => {
+    getAPIData();
+  }, []);
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Login" component={Login} />
-        <Tab.Screen name="SignUp" component={SignUp} />
-        <Tab.Screen name="Other" component={SignUp} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <View>
+      <Text style={{fontSize: 40}}>API Call</Text>
+      {data ? (
+        <View>
+          <Text style={{fontSize: 30}}>{data.id}</Text>
+          <Text style={{fontSize: 30}}>{data.userId}</Text>
+          <Text style={{fontSize: 30}}>{data.title}</Text>
+          <Text style={{fontSize: 30}}>{data.body}</Text>
+        </View>
+      ) : null}
+    </View>
   );
 }
-
-const Login = () => {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text style={{fontsize: 40}}>Login</Text>
-    </View>
-  );
-};
-
-const SignUp = () => {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text style={{fontsize: 40}}>SignUp</Text>
-    </View>
-  );
-};
 
 export default App;
