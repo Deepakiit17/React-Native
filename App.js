@@ -1,29 +1,56 @@
 import React, {useState} from 'react';
-import {Button, FlatList, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 
 function App() {
+  const [name, setName] = useState('');
+  const [age, setAge] = useState(0);
+  const [email, setEmail] = useState('');
   const saveAPIData = async () => {
-    const data = {
-      name: 'Killer',
-      age: 36,
-      email: 'killer@test.com',
-    };
     const url = 'http://10.0.2.2:3000/users';
     let result = await fetch(url, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(data),
+      body: JSON.stringify(name, age, email),
     });
     result = await result.json();
-    console.warn(result);
+    if (result) {
+      console.warn("Data Added");
+    }
   };
 
   return (
     <View>
-      <Text style={{fontSize: 40}}>POST API Call</Text>
+      <Text style={{fontSize: 40}}>POST API Call with input field data</Text>
+      <TextInput
+        style={styles.input}
+        value={name}
+        onChangeText={text => setName(text)}
+        placeholder="Enter Name"
+      />
+      <TextInput
+        style={styles.input}
+        value={age}
+        onChangeText={text => setAge(text)}
+        placeholder="Enter Age"
+      />
+      <TextInput
+        style={styles.input}
+        value={email}
+        onChangeText={text => setEmail(text)}
+        placeholder="Enter Email"
+      />
       <Button title="Save Data" onPress={saveAPIData} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  input: {
+    borderColor: 'skyblue',
+    borderWidth: 1,
+    margin: 20,
+    fontSize: 20,
+  },
+});
 
 export default App;
