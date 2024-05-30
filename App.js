@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     getAPIData();
   }, []);
-  
+
   return (
     <View>
       <Text style={{fontSize: 40}}>Call JSON server API Call</Text>
