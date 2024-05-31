@@ -1,97 +1,69 @@
-import React, {useState} from 'react';
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Button, StyleSheet, Text, View} from 'react-native';
 
 function App() {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState(0);
-  const [email, setEmail] = useState('');
+  const [data, setData] = useState([]);
 
-  const [nameError, setNameError] = useState(false);
-  const [ageError, setAgeError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-
-  const saveAPIData = async () => {
-    if (!name) {
-      setNameError(true);
-    } else {
-      setNameError(false);
-    }
-
-    if (!age) {
-      setAgeError(true);
-    } else {
-      setAgeError(false);
-    }
-
-    if (!email) {
-      setEmailError(true);
-    } else {
-      setEmailError(false);
-    }
-
-    if (!name || !age || !email) {
-      return false;
-    }
-
-    console.warn('next');
-
-    const url = 'http://10.0.2.2:3000/users';
-    let result = await fetch(url, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(name, age, email),
-    });
+  const getAPIData = async () => {
+    const url = 'http://192.168.162.154:3000/users';
+    let result = await fetch(url);
     result = await result.json();
+    // console.warn(result);
     if (result) {
-      console.warn('Data Added');
+      setData(result);
     }
   };
 
+  useEffect(() => {
+    getAPIData();
+  }, []);
+
   return (
-    <View>
-      <Text style={{fontSize: 40}}>POST API Call with input field data</Text>
-      <TextInput
-        style={styles.input}
-        value={name}
-        onChangeText={text => setName(text)}
-        placeholder="Enter Name"
-      />
-      {nameError ? (
-        <Text style={styles.errorText}>Please Enter Valid Name</Text>
-      ) : null}
-      <TextInput
-        style={styles.input}
-        value={age}
-        onChangeText={text => setAge(text)}
-        placeholder="Enter Age"
-      />
-      {ageError ? (
-        <Text style={styles.errorText}>Please Enter Valid Age</Text>
-      ) : null}
-      <TextInput
-        style={styles.input}
-        value={email}
-        onChangeText={text => setEmail(text)}
-        placeholder="Enter Email"
-      />
-      {emailError ? (
-        <Text style={styles.errorText}>Please Enter Valid Email</Text>
-      ) : null}
-      <Button title="Save Data" onPress={saveAPIData} />
+    <View style={styles.container}>
+      <Text style={{fontSize: 40}}>List with API data</Text>
+      <View style={styles.dataWrapper}>
+        <View style={{flex: 1}}>
+          <Text>Name</Text>
+        </View>
+        <View style={{flex: 2}}>
+          <Text>Age</Text>
+        </View>
+        <View style={{flex: 2}}>
+          <Text>Operations</Text>
+        </View>
+      </View>
+      {data.length
+        ? data.map(item => (
+            <View style={styles.dataWrapper}>
+              <View style={{flex: 1}}>
+                <Text>{item.name}</Text>
+              </View>
+              <View style={{flex: 1}}>
+                <Text>{item.age}</Text>
+              </View>
+              <View style={{flex: 1}}>
+                <Button title="Delete" />
+              </View>
+              <View style={{flex: 1}}>
+                <Button title="Update" />
+              </View>
+            </View>
+          ))
+        : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
-    borderColor: 'skyblue',
-    borderWidth: 1,
-    margin: 20,
-    fontSize: 20,
-    marginBottom: 5,
+  container: {
+    flex: 1,
   },
-  errorText: {
-    color: 'red',
+  dataWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: 'orange',
+    margin: 5,
+    padding: 8,
   },
 });
 
