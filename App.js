@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Modal, StyleSheet, Text, View} from 'react-native';
+import {Button, Modal, StyleSheet, Text, TextInput, View} from 'react-native';
 
 function App() {
   const [data, setData] = useState([]);
@@ -7,7 +7,7 @@ function App() {
   const [selectedUser, setSelectedUser] = useState(undefined);
 
   const getAPIData = async () => {
-    const url = 'http://localhost:3000/users';
+    const url = 'http://192.168.194.154:3000/users';
     try {
       let result = await fetch(url);
       result = await result.json();
@@ -20,7 +20,7 @@ function App() {
   };
 
   const deleteUser = async id => {
-    const url = 'http://localhost:3000/users';
+    const url = 'http://192.168.194.154:3000/users';
     try {
       let result = await fetch(`${url}/${id}`, {
         method: 'delete',
@@ -84,10 +84,27 @@ function App() {
 }
 
 const UserModal = props => {
+  console.warn(props.selectedUser);
+  const [name, setName] = useState(undefined);
+  const [age, setAge] = useState(undefined);
+  const [email, setEmail] = useState(undefined);
+
+  useEffect(() => {
+    if (props.selectedUser) {
+      setName(props.selectedUser.name);
+      setAge(props.selectedUser.age);
+      setEmail(props.selectedUser.email);
+    }
+  }, [props.selectedUser]);
   return (
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
-        <Text>{props.selectedUser.name}</Text>
+        <TextInput style={styles.input} value={name} />
+        <TextInput style={styles.input} value={age} />
+        <TextInput style={styles.input} value={email} />
+        <View style={{marginBottom: 15}}>
+          <Button title="Update" />
+        </View>
         <Button title="Close" onPress={() => props.setShowModal(false)} />
       </View>
     </View>
@@ -117,6 +134,13 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.7,
     elevation: 5,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: 'skyblue',
+    width: 300,
+    marginBottom: 15,
+    fontSize: 20,
   },
 });
 
