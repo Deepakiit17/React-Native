@@ -8,30 +8,24 @@ function App() {
 
   const getAPIData = async () => {
     const url = 'http://192.168.194.154:3000/users';
-    try {
-      let result = await fetch(url);
-      result = await result.json();
-      if (result) {
-        setData(result);
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
+
+    let result = await fetch(url);
+    result = await result.json();
+    if (result) {
+      setData(result);
     }
   };
 
   const deleteUser = async id => {
     const url = 'http://192.168.194.154:3000/users';
-    try {
-      let result = await fetch(`${url}/${id}`, {
-        method: 'delete',
-      });
-      result = await result.json();
-      if (result) {
-        console.warn('User Deleted');
-        getAPIData();
-      }
-    } catch (error) {
-      console.error('Error deleting user:', error);
+
+    let result = await fetch(`${url}/${id}`, {
+      method: 'delete',
+    });
+    result = await result.json();
+    if (result) {
+      console.warn('User Deleted');
+      getAPIData();
     }
   };
 
@@ -77,7 +71,11 @@ function App() {
           ))
         : null}
       <Modal visible={showModal} transparent={true}>
-        <UserModal setShowModal={setShowModal} selectedUser={selectedUser} />
+        <UserModal
+          setShowModal={setShowModal}
+          selectedUser={selectedUser}
+          getAPIData={getAPIData}
+        />
       </Modal>
     </View>
   );
@@ -96,14 +94,47 @@ const UserModal = props => {
       setEmail(props.selectedUser.email);
     }
   }, [props.selectedUser]);
+
+  const updateUsers = async () => {
+    console.warn(name, age, email, props.selectedUser.id);
+    const url = 'http://192.168.194.154:3000/users';
+    const id = props.selectedUser.id;
+
+    let result = await fetch(`${url}/${id}`, {
+      method: 'Put',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({name, age, email}),
+    });
+    result = await result.json();
+    if (result) {
+      console.warn(result);
+      props.getAPIData();
+      props.setShowModal(false);
+    }
+  };
+
   return (
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
-        <TextInput style={styles.input} value={name} />
-        <TextInput style={styles.input} value={age} />
-        <TextInput style={styles.input} value={email} />
+        <TextInput
+          style={styles.input}
+          value={name}
+          onChangeText={text => setName(text)}
+        />
+        <TextInput
+          style={styles.input}
+          value={age}
+          onChangeText={text => setAge(text)}
+        />
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={text => setEmail(text)}
+        />
         <View style={{marginBottom: 15}}>
-          <Button title="Update" />
+          <Button title="Update" onPress={updateUsers} />
         </View>
         <Button title="Close" onPress={() => props.setShowModal(false)} />
       </View>
