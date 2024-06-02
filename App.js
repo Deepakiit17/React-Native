@@ -5,12 +5,24 @@ function App() {
   const [data, setData] = useState([]);
 
   const getAPIData = async () => {
-    const url = 'http://192.168.162.154:3000/users';
+    const url = 'http://localhost:3000/users';
     let result = await fetch(url);
     result = await result.json();
     // console.warn(result);
     if (result) {
       setData(result);
+    }
+  };
+
+  const deleteUser = async id => {
+    const url = 'http://localhost:3000/users';
+    let result = await fetch(`${url}/${id}`, {
+      method: 'delete',
+    });
+    result = await result.json();
+    if (result) {
+      console.warn('User Deleted');
+      getAPIData();
     }
   };
 
@@ -42,7 +54,7 @@ function App() {
                 <Text>{item.age}</Text>
               </View>
               <View style={{flex: 1}}>
-                <Button title="Delete" />
+                <Button title="Delete" onPress={() => deleteUser(item.id)} />
               </View>
               <View style={{flex: 1}}>
                 <Button title="Update" />
