@@ -3,12 +3,12 @@ import {StyleSheet, Text, View} from 'react-native';
 
 const Header = () => {
   return (
-    <View style={styles.container}>
+    <View>
       <Text
         style={{
           fontSize: 30,
           textAlign: 'right',
-          padding: 20,
+          padding: 10,
           backgroundColor: 'orange',
         }}>
         0
