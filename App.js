@@ -1,31 +1,45 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {useState} from 'react';
-import {Button, Text, View} from 'react-native';
+import React from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import Header from './Components/Header';
+import Product from './Components/Product';
 
 function App() {
-  const [user, setUser] = useState('');
-  const setData = async () => {
-    await AsyncStorage.setItem('user', 'Anil Sidhu');
-  };
-  const getData = async () => {
-    const name = await AsyncStorage.getItem('user');
-    setUser(name);
-  };
-  const removeData = async () => {
-    await AsyncStorage.removeItem('user');
-    setUser('');
-  };
-
+  const products = [
+    {
+      name: 'Samsung Mobile',
+      color: 'White',
+      price: 30000,
+      image: 'https://cdn-icons-png.flaticon.com/512/0/191.png',
+    },
+    {
+      name: 'Nokia Mobile',
+      color: 'Blue',
+      price: 20000,
+      image: 'https://cdn-icons-png.flaticon.com/512/0/191.png',
+    },
+    {
+      name: 'Apple I phone',
+      color: 'Black',
+      price: 70000,
+      image: 'https://cdn-icons-png.flaticon.com/512/0/191.png',
+    },
+  ];
   return (
-    <View style={{marginTop: 100, marginLeft: 30}}>
-      <Text style={{fontSize: 40}}>
-        AsyncStorage with React Native | {user}
-      </Text>
-      <Button title="Set Data" onPress={setData} />
-      <Button title="Get Data" onPress={getData} />
-      <Button title="Remove Data" onPress={removeData} />
+    <View style={styles.container}>
+      <Header />
+      <ScrollView>
+        {products.map(item => (
+          <Product item={item} />
+        ))}
+      </ScrollView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default App;
