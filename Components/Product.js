@@ -17,6 +17,7 @@ const Product = props => {
         borderBottomColor: 'orange',
         borderBottomWidth: 2,
         padding: 10,
+        marginBottom: 50,
       }}>
       <Text style={{fontSize: 24}}>{item.name}</Text>
       <Text style={{fontSize: 24}}>{item.price}</Text>
