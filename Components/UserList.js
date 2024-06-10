@@ -10,9 +10,14 @@ const UserList = () => {
   useEffect(() => {
     dispatch(getUserList());
   }, []);
+  console.warn('in component', userList);
   return (
     <View>
-      <Text>User List Screen</Text>
+      {userList.length
+        ? userList.map(item => (
+            <Text style={{fontSize: 18}}>{item.firstName}</Text>
+          ))
+        : null}
     </View>
   );
 };
